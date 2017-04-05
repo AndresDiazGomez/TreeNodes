@@ -1,99 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace TreeNodes
 {
     /// <summary>
-    /// Represent a binary tree.
+    /// Represent a strongly type tree, with two nodes.
     /// </summary>
-    /// <typeparam name="T">Node value type.</typeparam>
-    public class BinaryTree<T> : TwoBranchTree<BinaryTree<T>, T>
-        where T : IComparable
+    /// <typeparam name="TNode">Node type.</typeparam>
+    /// <typeparam name="TValue">Node value type.</typeparam>
+    public abstract class BinaryTree<TNode, TValue> : Tree<TNode, TValue>
+        where TNode : Node<TValue>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BinaryTree{T}"/> class.
+        /// Initializes a new instance of the <see cref="BinaryTree{TNode, TValue}"/> class.
         /// </summary>
         /// <param name="value">Node value.</param>
         /// <exception cref="ArgumentNullException">The specified value is null.</exception>
-        public BinaryTree(T value)
-            : base(value)
+        public BinaryTree(TValue value)
+           : base(value)
         {
         }
 
         /// <summary>
-        /// Add a value to the binary tree.
+        /// Initializes a new instance of the <see cref="BinaryTree{TNode, TValue}"/> class
+        /// referred to the parent node.
         /// </summary>
-        /// <param name="value">Value to add.</param>
-        public void AddValue(T value)
+        /// <param name="value">Node value.</param>
+        /// <param name="parent">Parent node.</param>
+        /// <exception cref="ArgumentNullException">The specified value is null.</exception>
+        public BinaryTree(TValue value, TNode parent)
+           : base(value, parent)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-            if (SearchElement(this, value))
-            {
-                throw new InvalidOperationException("Cannot add a duplicate value.");
-            }
-            AddValue(this, value);
         }
 
         /// <summary>
-        /// Determines whether an element is in the <see cref="BinaryTree{T}"/> object.
+        /// Determines whether the node have a left element.
         /// </summary>
-        /// <param name="value">The value to locate in the <see cref="BinaryTree{T}"/> object.</param>
-        /// <returns>True if item is found in the <see cref="BinaryTree{T}"/> object; otherwise, false.</returns>
-        public bool Contains(T value)
+        public bool HasLeft => Left != null;
+
+        /// <summary>
+        /// Determines whether the node have a right element.
+        /// </summary>
+        public bool HasRight => Right != null;
+
+        /// <summary>
+        /// Left node element.
+        /// </summary>
+        public TNode Left { get; private set; }
+
+        /// <summary>
+        /// Right node element.
+        /// </summary>
+        public TNode Right { get; private set; }
+
+        /// <summary>
+        /// Set the left node element.
+        /// </summary>
+        /// <param name="node">Node element.</param>
+        /// <exception cref="ArgumentNullException">The specified node is null.</exception>
+        protected void SetLeftNode(TNode node)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-            return SearchElement(this, value);
+            if (node == null)
+                throw new ArgumentNullException(nameof(node));
+            Left = node;
         }
 
-        private void AddValue(BinaryTree<T> element, T value)
+        /// <summary>
+        /// Set the right node element.
+        /// </summary>
+        /// <param name="node">Node element.</param>
+        /// <exception cref="ArgumentNullException">The specified node is null.</exception>
+        protected void SetRightNode(TNode node)
         {
-            var compareValue = element.Value.CompareTo(value);
-            if (compareValue > 0)
-            {
-                if (element.HasLeft)
-                {
-                    AddValue(element.Left, value);
-                }
-                else
-                {
-                    element.SetLeftNode(new BinaryTree<T>(value));
-                }
-            }
-            else if (compareValue < 0)
-            {
-                if (element.HasRight)
-                {
-                    AddValue(element.Right, value);
-                }
-                else
-                {
-                    element.SetRightNode(new BinaryTree<T>(value));
-                }
-            }
-        }
-
-        private bool SearchElement(BinaryTree<T> element, T value)
-        {
-            var compareValue = element.Value.CompareTo(value);
-            if (compareValue == 0)
-            {
-                return true;
-            }
-            if (compareValue > 0 && element.HasLeft)
-            {
-                return SearchElement(element.Left, value);
-            }
-            if (compareValue < 0 && element.HasRight)
-            {
-                return SearchElement(element.Right, value);
-            }
-            return false;
+            if (node == null)
+                throw new ArgumentNullException(nameof(node));
+            Right = node;
         }
     }
 }

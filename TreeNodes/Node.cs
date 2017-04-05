@@ -3,8 +3,7 @@
 namespace TreeNodes
 {
     /// <summary>
-    /// Represent a strongly typed node class. 
-    /// Contains the value of the node.
+    /// Represent a strongly typed node. 
     /// </summary>
     /// <typeparam name="T">The type of the element.</typeparam>
     public class Node<T>
