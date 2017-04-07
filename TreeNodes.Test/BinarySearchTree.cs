@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TreeNodes.Test
 {
     [TestClass]
-    public class BinaryTreeTest
+    public class BinarySearchTree
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]

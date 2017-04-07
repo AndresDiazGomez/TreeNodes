@@ -6,7 +6,7 @@ namespace TreeNodes
     /// Represent a binary tree.
     /// </summary>
     /// <typeparam name="T">Node value type.</typeparam>
-    public class BinarySearchTree<T> : BinaryTree<BinarySearchTree<T>, T>
+    public sealed class BinarySearchTree<T> : BinaryTree<BinarySearchTree<T>, T>
         where T : IComparable
     {
         /// <summary>
@@ -16,17 +16,6 @@ namespace TreeNodes
         /// <exception cref="ArgumentNullException">The specified value is null.</exception>
         public BinarySearchTree(T value)
             : base(value)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BinarySearchTree{T}"/> class.
-        /// </summary>
-        /// <param name="value">Node value.</param>
-        /// <param name="parent">Parent node.</param>
-        /// <exception cref="ArgumentNullException">The specified value or node are null.</exception>
-        public BinarySearchTree(T value, BinarySearchTree<T> parent)
-            : base(value, parent)
         {
         }
 
@@ -52,7 +41,7 @@ namespace TreeNodes
         /// </summary>
         /// <param name="value">The value to locate in the <see cref="BinarySearchTree{T}"/> object.</param>
         /// <returns>True if item is found in the <see cref="BinarySearchTree{T}"/> object; otherwise, false.</returns>
-        public bool Contains(T value)
+        public override bool Contains(T value)
         {
             if (value == null)
             {
@@ -72,7 +61,7 @@ namespace TreeNodes
                 }
                 else
                 {
-                    element.SetLeftNode(new BinarySearchTree<T>(value, element));
+                    element.SetLeftNode(new BinarySearchTree<T>(value));
                 }
             }
             else if (compareValue < 0)
@@ -83,7 +72,7 @@ namespace TreeNodes
                 }
                 else
                 {
-                    element.SetRightNode(new BinarySearchTree<T>(value, element));
+                    element.SetRightNode(new BinarySearchTree<T>(value));
                 }
             }
         }

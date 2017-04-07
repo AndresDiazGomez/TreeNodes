@@ -8,7 +8,8 @@ namespace TreeNodes
     /// <typeparam name="TNode">Node type.</typeparam>
     /// <typeparam name="TValue">Node value type.</typeparam>
     public abstract class BinaryTree<TNode, TValue> : Tree<TNode, TValue>
-        where TNode : Node<TValue>
+        where TValue : IComparable
+        where TNode : Tree<TNode, TValue>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BinaryTree{TNode, TValue}"/> class.
@@ -17,18 +18,6 @@ namespace TreeNodes
         /// <exception cref="ArgumentNullException">The specified value is null.</exception>
         public BinaryTree(TValue value)
            : base(value)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BinaryTree{TNode, TValue}"/> class
-        /// referred to the parent node.
-        /// </summary>
-        /// <param name="value">Node value.</param>
-        /// <param name="parent">Parent node.</param>
-        /// <exception cref="ArgumentNullException">The specified value is null.</exception>
-        public BinaryTree(TValue value, TNode parent)
-           : base(value, parent)
         {
         }
 
@@ -62,6 +51,7 @@ namespace TreeNodes
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
             Left = node;
+            Left.
         }
 
         /// <summary>
@@ -74,6 +64,39 @@ namespace TreeNodes
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
             Right = node;
+            //SetParent(this as TNode);
         }
+
+        /// <summary>
+        /// Determines whether an element is in the tree object.
+        /// </summary>
+        /// <param name="value">The value to locate in the tree object.</param>
+        /// <returns>True if item is found in the tree object; otherwise, false.</returns>
+        public virtual bool Contains(TValue value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            return true; // SearchElement(this, value);
+        }
+
+        //private bool SearchElement(BinaryTree<TNode, TValue> element, TValue value)
+        //{
+        //    var compareValue = element.Value.CompareTo(value);
+        //    if (compareValue == 0)
+        //    {
+        //        return true;
+        //    }
+        //    if (compareValue > 0 && element.HasLeft)
+        //    {
+        //        return SearchElement(element.Left, value);
+        //    }
+        //    if (compareValue < 0 && element.HasRight)
+        //    {
+        //        return SearchElement(element.Right, value);
+        //    }
+        //    return false;
+        //}
     }
 }
