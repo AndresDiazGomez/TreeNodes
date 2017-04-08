@@ -6,31 +6,24 @@ namespace TreeNodes.Test
     public class TreeTest
     {
         [TestMethod]
-        public void Create_a_root_node_have_not_a_parent()
+        public void Create_a_root_node_must_have_not_a_parent()
         {
             var root = new TreeSpec(5);
 
-            Assert.IsFalse(root.HasParent);
+            Assert.IsTrue(root.IsRoot);
         }
 
-        //[TestMethod]
-        //public void Create_a_node_with_parent_must_set_hasparent_property_as_true()
-        //{
-        //    var root = new TreeSpec(5);
-        //    var leaf = new TreeSpec(1, root);
+        [TestMethod]
+        public void Set_a_parent_must_change_is_root_value()
+        {
+            var root = new TreeSpec(5);
+            var leaf = new TreeSpec(5);
 
-        //    Assert.IsTrue(leaf.HasParent);
-        //}
+            leaf.SetParent(root);
 
-        //[TestMethod]
-        //public void HasParent_must_return_true_if_has_parent_otherwise_false()
-        //{
-        //    var root = new TreeSpec(5);
-        //    var leaf = new TreeSpec(1, root);
-
-        //    Assert.IsTrue(!root.HasParent && root.Parent == null);
-        //    Assert.IsTrue(leaf.HasParent && leaf.Parent != null);
-        //}
+            Assert.IsTrue(root.IsRoot);
+            Assert.IsFalse(leaf.IsRoot);
+        }
 
         public class TreeSpec : Tree<TreeSpec, int>
         {
@@ -38,6 +31,11 @@ namespace TreeNodes.Test
                 : base(value)
             {
 
+            }
+
+            public void SetParent(TreeSpec parent)
+            {
+                Parent = parent;
             }
         }
     }

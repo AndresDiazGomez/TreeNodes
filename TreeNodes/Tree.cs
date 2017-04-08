@@ -21,25 +21,17 @@ namespace TreeNodes
         }
 
         /// <summary>
-        /// Determines whether the node have a parent element.
+        /// Determines whether the node is the root of the tree.
         /// </summary>
-        public bool HasParent => Parent != null;
+        public bool IsRoot => Parent == null;
 
         /// <summary>
         /// Get the parent node element.
         /// </summary>
-        public TNode Parent { get; private set; }
-
-        /// <summary>
-        /// Set parent node.
-        /// </summary>
-        /// <param name="parent">Parent node.</param>
-        /// <exception cref="ArgumentNullException">The specified parent is null.</exception>
-        protected void SetParent(TNode parent)
+        public TNode Parent
         {
-            if (parent == null)
-                throw new ArgumentNullException(nameof(parent));
-            Parent = parent;
+            get;
+            protected set;
         }
     }
 }

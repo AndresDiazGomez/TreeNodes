@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace TreeNodes
 {
@@ -7,9 +9,9 @@ namespace TreeNodes
     /// </summary>
     /// <typeparam name="TNode">Node type.</typeparam>
     /// <typeparam name="TValue">Node value type.</typeparam>
-    public abstract class BinaryTree<TNode, TValue> : Tree<TNode, TValue>
+    public abstract class BinaryTree<TNode, TValue> : Tree<TNode, TValue>//, IEnumerable<TNode>, IEnumerable
         where TValue : IComparable
-        where TNode : Tree<TNode, TValue>
+        where TNode : BinaryTree<TNode, TValue>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BinaryTree{TNode, TValue}"/> class.
@@ -42,6 +44,30 @@ namespace TreeNodes
         public TNode Right { get; private set; }
 
         /// <summary>
+        /// Detach left node tree.
+        /// </summary>
+        public void DetachLeftNode()
+        {
+            if (Left != null)
+            {
+                Left.Parent = null;
+            }
+            Left = null;
+        }
+
+        /// <summary>
+        /// Detach right node tree.
+        /// </summary>
+        public void DetachRightNode()
+        {
+            if (Right != null)
+            {
+                Right.Parent = null;
+            }
+            Right = null;
+        }
+
+        /// <summary>
         /// Set the left node element.
         /// </summary>
         /// <param name="node">Node element.</param>
@@ -51,7 +77,7 @@ namespace TreeNodes
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
             Left = node;
-            Left.
+            Left.Parent = this as TNode;
         }
 
         /// <summary>
@@ -64,7 +90,7 @@ namespace TreeNodes
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
             Right = node;
-            //SetParent(this as TNode);
+            Right.Parent = this as TNode;
         }
 
         /// <summary>
@@ -72,6 +98,7 @@ namespace TreeNodes
         /// </summary>
         /// <param name="value">The value to locate in the tree object.</param>
         /// <returns>True if item is found in the tree object; otherwise, false.</returns>
+        /// <exception cref="ArgumentNullException">The specified value is null.</exception>
         public virtual bool Contains(TValue value)
         {
             if (value == null)
@@ -81,22 +108,31 @@ namespace TreeNodes
             return true; // SearchElement(this, value);
         }
 
-        //private bool SearchElement(BinaryTree<TNode, TValue> element, TValue value)
+        //private bool SearchElement(TNode element, TValue value)
         //{
-        //    var compareValue = element.Value.CompareTo(value);
-        //    if (compareValue == 0)
+        //    if (element.Value.CompareTo(value) == 0)
         //    {
         //        return true;
         //    }
-        //    if (compareValue > 0 && element.HasLeft)
+        //    if (element.HasLeft)
         //    {
         //        return SearchElement(element.Left, value);
         //    }
-        //    if (compareValue < 0 && element.HasRight)
+        //    if (element.HasRight)
         //    {
         //        return SearchElement(element.Right, value);
         //    }
         //    return false;
+        //}
+
+        //public IEnumerator<TNode> GetEnumerator()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    throw new NotImplementedException();
         //}
     }
 }

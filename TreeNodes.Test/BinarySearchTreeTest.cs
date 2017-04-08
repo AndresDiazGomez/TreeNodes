@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TreeNodes.Test
 {
     [TestClass]
-    public class BinarySearchTree
+    public class BinarySearchTreeTest
     {
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -25,7 +25,7 @@ namespace TreeNodes.Test
         }
 
         [TestMethod]
-        public void Node_tree_must_know_about_contained_elements()
+        public void Tree_must_know_about_contained_elements()
         {
             var tree = new BinarySearchTree<int>(4);
 
@@ -45,6 +45,7 @@ namespace TreeNodes.Test
             Assert.IsTrue(tree.Contains(7));
             Assert.IsTrue(tree.Contains(10));
             Assert.IsTrue(tree.Contains(9));
+            Assert.IsFalse(tree.Contains(-1));
         }
 
         [TestMethod]

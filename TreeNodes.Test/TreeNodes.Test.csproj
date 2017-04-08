@@ -50,9 +50,9 @@
   <ItemGroup>
     <Compile Include="NodeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BinarySearchTree.cs" />
+    <Compile Include="BinarySearchTreeTest.cs" />
     <Compile Include="TreeTest.cs" />
-    <Compile Include="BinaryTest.cs" />
+    <Compile Include="BinaryTreeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

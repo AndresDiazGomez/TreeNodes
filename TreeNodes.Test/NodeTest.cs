@@ -24,6 +24,7 @@ namespace TreeNodes.Test
         public void Default_constructor_must_set_value_property()
         {
             var value = 1;
+
             var node = new Node<int>(value);
 
             Assert.AreEqual(node.Value, value);
