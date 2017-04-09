@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace TreeNodes
 {
@@ -151,6 +152,39 @@ namespace TreeNodes
             {
                 SearchElement(element.Right, value);
             }
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return ToString(this, "-");
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <param name="separator">Node separator.</param>
+        /// <returns>A string that represents the current object.</returns>
+        public virtual string ToString(string separator)
+        {
+            return ToString(this, separator);
+        }
+
+        private string ToString(BinaryTree<TNode, TValue> element, string separator)
+        {
+            var toString = new StringBuilder($"{element.Value}");
+            if (element.HasLeft)
+            {
+                toString.Append($" {separator} {ToString(element.Left, separator)}");
+            }
+            if (element.HasRight)
+            {
+                toString.Append($" {separator} {ToString(element.Right, separator)}");
+            }
+            return toString.ToString();
         }
     }
 }

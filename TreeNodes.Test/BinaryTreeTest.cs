@@ -191,6 +191,43 @@ namespace TreeNodes.Test
             Assert.AreEqual(root.Count, 8);
         }
 
+        [TestMethod]
+        public void ToString_with_the_root_must_return_only_the_value()
+        {
+            var root = new BinaryTreeSpec(1);
+
+            Assert.AreEqual(root.ToString(), "1");
+        }
+
+        [TestMethod]
+        public void ToString_must_values_separate_by_a_dash()
+        {
+            var root = new BinaryTreeSpec(1);
+            var left = new BinaryTreeSpec(2);
+            var right = new BinaryTreeSpec(3);
+
+            root.SetLeft(left);
+            root.SetRigth(right);
+
+            Assert.AreEqual(root.ToString(), "1 - 2 - 3");
+        }
+
+        [TestMethod]
+        public void Full_tree_ToString_must_values_separate_by_a_dash()
+        {
+            var root = GetTree();
+
+            Assert.AreEqual(root.ToString(), "1 - 2 - 2 - 5 - 4 - 3 - 7 - 10");
+        }
+
+        [TestMethod]
+        public void Full_tree_ToString_must_values_separate_by_a_specified_separator()
+        {
+            var root = GetTree();
+
+            Assert.AreEqual(root.ToString("+"), "1 + 2 + 2 + 5 + 4 + 3 + 7 + 10");
+        }
+
         public class BinaryTreeSpec : BinaryTree<BinaryTreeSpec, int>
         {
             public BinaryTreeSpec(int value)
