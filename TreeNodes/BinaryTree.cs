@@ -11,7 +11,6 @@ namespace TreeNodes
         where TValue : IComparable
         where TNode : BinaryTree<TNode, TValue>
     {
-        private int _count;
         private bool findElement;
 
         /// <summary>
@@ -31,9 +30,7 @@ namespace TreeNodes
         {
             get
             {
-                _count = 0;
-                NodeCount(this);
-                return _count;
+                return NodeCount(this);
             }
         }
 
@@ -126,17 +123,18 @@ namespace TreeNodes
             Right.Parent = this as TNode;
         }
 
-        private void NodeCount(BinaryTree<TNode, TValue> element)
+        private int NodeCount(BinaryTree<TNode, TValue> element)
         {
-            _count++;
+            int quantity = 1;
             if (element.HasLeft)
             {
-                NodeCount(element.Left);
+                quantity += NodeCount(element.Left);
             }
             if (element.HasRight)
             {
-                NodeCount(element.Right);
+                quantity += NodeCount(element.Right);
             }
+            return quantity;
         }
 
         private void SearchElement(BinaryTree<TNode, TValue> element, TValue value)
