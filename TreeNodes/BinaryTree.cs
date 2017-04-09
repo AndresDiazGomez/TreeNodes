@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace TreeNodes
 {
     /// <summary>
-    /// Represent a strongly type tree, with two nodes.
+    /// Represent a strongly type tree, with left and right nodes.
     /// </summary>
     /// <typeparam name="TNode">Node type.</typeparam>
     /// <typeparam name="TValue">Node value type.</typeparam>
@@ -76,6 +76,7 @@ namespace TreeNodes
         {
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
+            DetachLeftNode();
             Left = node;
             Left.Parent = this as TNode;
         }
@@ -89,6 +90,7 @@ namespace TreeNodes
         {
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
+            DetachRightNode();
             Right = node;
             Right.Parent = this as TNode;
         }

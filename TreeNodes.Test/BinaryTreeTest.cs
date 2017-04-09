@@ -135,6 +135,34 @@ namespace TreeNodes.Test
             Assert.IsFalse(root.HasLeft);
         }
 
+        [TestMethod]
+        public void Reset_a_left_node_must_detach_older_one()
+        {
+            var root = new BinaryTreeSpec(1);
+            var left = new BinaryTreeSpec(2);
+            var left2 = new BinaryTreeSpec(3);
+
+            root.SetLeft(left);
+            root.SetLeft(left2);
+
+            Assert.IsNull(left.Parent);
+            Assert.AreEqual(root.Left.Value, left2.Value);
+        }
+
+        [TestMethod]
+        public void Reset_a_right_node_must_detach_older_one()
+        {
+            var root = new BinaryTreeSpec(1);
+            var right = new BinaryTreeSpec(2);
+            var right2 = new BinaryTreeSpec(3);
+
+            root.SetRigth(right);
+            root.SetRigth(right2);
+
+            Assert.IsNull(right.Parent);
+            Assert.AreEqual(root.Right.Value, right2.Value);
+        }
+
         //[TestMethod]
         //public void Binary_tree_must_know_about_contained_elements()
         //{
