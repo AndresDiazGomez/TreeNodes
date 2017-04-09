@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace TreeNodes
 {
@@ -9,10 +7,13 @@ namespace TreeNodes
     /// </summary>
     /// <typeparam name="TNode">Node type.</typeparam>
     /// <typeparam name="TValue">Node value type.</typeparam>
-    public abstract class BinaryTree<TNode, TValue> : Tree<TNode, TValue>//, IEnumerable<TNode>, IEnumerable
+    public abstract class BinaryTree<TNode, TValue> : Tree<TNode, TValue>
         where TValue : IComparable
         where TNode : BinaryTree<TNode, TValue>
     {
+        private int _count;
+        private bool findElement;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BinaryTree{TNode, TValue}"/> class.
         /// </summary>
@@ -24,12 +25,25 @@ namespace TreeNodes
         }
 
         /// <summary>
-        /// Determines whether the node have a left element.
+        /// Indicates the number of childs nodes, including the current node.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                _count = 0;
+                NodeCount(this);
+                return _count;
+            }
+        }
+
+        /// <summary>
+        /// Indicates if the node have a left element.
         /// </summary>
         public bool HasLeft => Left != null;
 
         /// <summary>
-        /// Determines whether the node have a right element.
+        /// Indicates if the node have a right element.
         /// </summary>
         public bool HasRight => Right != null;
 
@@ -42,6 +56,23 @@ namespace TreeNodes
         /// Right node element.
         /// </summary>
         public TNode Right { get; private set; }
+
+        /// <summary>
+        /// Determines whether an element is in the tree object.
+        /// </summary>
+        /// <param name="value">The value to locate in the tree object.</param>
+        /// <returns>True if item is found in the tree object; otherwise, false.</returns>
+        /// <exception cref="ArgumentNullException">The specified value is null.</exception>
+        public virtual bool Contains(TValue value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+            findElement = false;
+            SearchElement(this, value);
+            return findElement;
+        }
 
         /// <summary>
         /// Detach left node tree.
@@ -95,46 +126,33 @@ namespace TreeNodes
             Right.Parent = this as TNode;
         }
 
-        /// <summary>
-        /// Determines whether an element is in the tree object.
-        /// </summary>
-        /// <param name="value">The value to locate in the tree object.</param>
-        /// <returns>True if item is found in the tree object; otherwise, false.</returns>
-        /// <exception cref="ArgumentNullException">The specified value is null.</exception>
-        public virtual bool Contains(TValue value)
+        private void NodeCount(BinaryTree<TNode, TValue> element)
         {
-            if (value == null)
+            _count++;
+            if (element.HasLeft)
             {
-                throw new ArgumentNullException(nameof(value));
+                NodeCount(element.Left);
             }
-            return true; // SearchElement(this, value);
+            if (element.HasRight)
+            {
+                NodeCount(element.Right);
+            }
         }
 
-        //private bool SearchElement(TNode element, TValue value)
-        //{
-        //    if (element.Value.CompareTo(value) == 0)
-        //    {
-        //        return true;
-        //    }
-        //    if (element.HasLeft)
-        //    {
-        //        return SearchElement(element.Left, value);
-        //    }
-        //    if (element.HasRight)
-        //    {
-        //        return SearchElement(element.Right, value);
-        //    }
-        //    return false;
-        //}
-
-        //public IEnumerator<TNode> GetEnumerator()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void SearchElement(BinaryTree<TNode, TValue> element, TValue value)
+        {
+            if (element.Value.CompareTo(value) == 0)
+            {
+                findElement = true;
+            }
+            if (element.HasLeft && !findElement)
+            {
+                SearchElement(element.Left, value);
+            }
+            if (element.HasRight && !findElement)
+            {
+                SearchElement(element.Right, value);
+            }
+        }
     }
 }

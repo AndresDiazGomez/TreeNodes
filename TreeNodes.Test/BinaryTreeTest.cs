@@ -163,14 +163,33 @@ namespace TreeNodes.Test
             Assert.AreEqual(root.Right.Value, right2.Value);
         }
 
-        //[TestMethod]
-        //public void Binary_tree_must_know_about_contained_elements()
-        //{
-        //    var root = GetTree();
+        [TestMethod]
+        public void Binary_tree_must_know_about_contained_elements()
+        {
+            var root = GetTree();
 
-        //    Assert.IsTrue(root.Contains(10));
-        //    Assert.IsFalse(root.Contains(-1));
-        //}
+            var containsTen = root.Contains(10);
+            var containsMinusOne = root.Contains(-1);
+
+            Assert.IsTrue(containsTen);
+            Assert.IsFalse(containsMinusOne);
+        }
+
+        [TestMethod]
+        public void A_root_is_only_one_element()
+        {
+            var root = new BinaryTreeSpec(1);
+
+            Assert.AreEqual(root.Count, 1);
+        }
+
+        [TestMethod]
+        public void A_tree_must_know_about_the_quantity_of_the_elements()
+        {
+            var root = GetTree();
+
+            Assert.AreEqual(root.Count, 8);
+        }
 
         public class BinaryTreeSpec : BinaryTree<BinaryTreeSpec, int>
         {
